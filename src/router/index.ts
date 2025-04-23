@@ -3,7 +3,7 @@ import {
   createWebHashHistory,
   type RouteLocationNormalized
 } from "vue-router";
-import routes from "./routes";
+import routes from "./zhuye";
 import { useCachedViewStoreHook } from "@/store/modules/cached-view";
 // import NProgress from "@/utils/progress";
 import setPageTitle from "@/utils/set-page-title";
