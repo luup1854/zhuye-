@@ -28,6 +28,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: "我的" }
       }
     ]
+  },
+  {
+    path: "/Detail",
+    name: "Detail",
+    component: () => import("@/views/zhuye/DetailsView.vue"),
+    meta: { title: "活动详情" }
   }
 ];
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { getCampusService } from "@/api/zhuye/index.ts";
 
 const tab = ref(0);
 const icons = [
@@ -7,6 +8,7 @@ const icons = [
   { icon: "friends-o", text: "闲时兼职" },
   { icon: "records", text: "学生志愿" }
 ];
+
 </script>
 
 <template>
@@ -48,5 +50,4 @@ const icons = [
 </template>
 
 <style scoped>
-/* 如有额外样式可在这里扩展 */
 </style>
