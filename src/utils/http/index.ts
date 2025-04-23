@@ -12,7 +12,7 @@ import "vant/es/toast/style";
 // 默认 axios 实例请求配置
 const configDefault = {
   headers: {
-    "Content-Type": ContentTypeEnum.FORM_URLENCODED
+    "Content-Type": ContentTypeEnum.JSON
   },
   timeout: 0,
   baseURL: import.meta.env.VITE_BASE_API,

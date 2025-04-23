@@ -1,4 +1,5 @@
 import Layout from "@/views/zhuye/layout.vue";
+import path from "path";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -34,6 +35,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "Detail",
     component: () => import("@/views/zhuye/DetailsView.vue"),
     meta: { title: "活动详情" }
+  },
+  {
+    path:'/Comment',
+    name:'Comment',
+    component:() => import("@/views/zhuye/CommentView.vue"),
+    meta:{title:'评论'}
   }
 ];
 

@@ -15,8 +15,20 @@ const onClickLeft = () => {
     <van-nav-bar
       :title="route.meta.title"
       left-text="返回"
+      class="sticky top-0 z-10 !text-white !bg-[#16a45e]"
       left-arrow
       @click-left="onClickLeft"
     />
   </div>
 </template>
+<style scoped>
+:deep(.van-nav-bar__title) {
+  color: white !important;
+}
+:deep(.van-nav-bar__text) {
+  color: white !important;
+}
+:deep(.van-nav-bar__arrow){
+    color: white !important;
+}
+</style>
