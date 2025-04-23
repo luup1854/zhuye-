@@ -1,34 +1,66 @@
 <script setup lang="ts">
+import { loginStu } from "@/api/zhuye";
 import { ref } from "vue";
+import { useMemberStore } from "@/store/modules/member"; // 导入 store
+
 const showPopup = ref<boolean>(false);
 const username = ref(""); // 用户名输入值
 
 const userInfo = {
   nickname: "欢迎回来~~~",
-  tips: "马上注册，使用更多功能"
+  tips: "使用更多功能",
+  pleaseLogin: "请登录"
 };
 
+// 获取 store 实例
+const memberStore = useMemberStore();
 const show = () => {
   showPopup.value = true;
 };
 
 const submitLogin = () => {
-  console.log("用户登录账号：", username.value);
-  showPopup.value = false;
+  loginStu(username.value)
+    .then(res => {
+      console.log("用户登录账号：", res);
+      if (res) {
+        // 将获取到的学生信息存储到 Pinia store 中
+        memberStore.setProfile({
+          username: res.username,
+          name: res.name,
+          university: res.university,
+          college: res.college,
+          major: res.major,
+          phone: res.phone,
+          idCard: res.idCard
+        });
+
+        showPopup.value = false;
+      } else {
+        // 登录失败，提示错误信息
+        console.error("登录失败", res);
+        // 可以在这里添加一个提示框或者弹窗，告知用户登录失败
+      }
+    })
+    .catch(error => {
+      console.error("登录请求出错", error);
+      // 登录失败时的错误提示
+      // 可以在这里显示错误提示给用户
+    });
 };
 </script>
 
 <template>
   <div class="h-full pb-[10px]">
-    <div
-      class="flex justify-around items-center p-4 h-[180px] bg-[#16a45e]"
-      @click="show"
-    >
+    <div class="flex justify-around items-center p-4 h-[180px] bg-[#16a45e]">
       <div>
         <div class="text-lg font-semibold text-white">
-          {{ userInfo.nickname }}
+          <!-- 如果 Pinia 中有学生信息，显示 major 和 name，否则显示 请登录 -->
+          {{
+            memberStore.profile.major && memberStore.profile.name
+              ? `${memberStore.profile.major} - ${memberStore.profile.name}`
+              : userInfo.pleaseLogin
+          }}
         </div>
-        <div class="text-sm mt-1 text-white">{{ userInfo.tips }}</div>
       </div>
       <div>
         <van-icon name="user-circle-o" size="60" color="#fff" />
@@ -43,6 +75,7 @@ const submitLogin = () => {
       </van-cell-group>
     </div>
 
+    <!-- 登录弹窗 -->
     <van-popup
       v-model:show="showPopup"
       :style="{ padding: '20px', width: '80%', borderRadius: '10px' }"

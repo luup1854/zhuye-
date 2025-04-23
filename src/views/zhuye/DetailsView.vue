@@ -37,14 +37,12 @@ const onApply = () => showToast("报名成功");
 
     <!-- 底部操作栏 -->
     <van-action-bar>
-        
       <van-action-bar-icon icon="share-o" text="分享" @click="onShare" />
       <van-action-bar-icon icon="star-o" text="收藏" @click="onCollect" />
       <van-action-bar-button text="评价" @click="onEvaluate" />
-      <van-action-bar-button color="#16a45e"  text="我要报名" @click="onApply" />
+      <van-action-bar-button color="#16a45e" text="我要报名" @click="onApply" />
     </van-action-bar>
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
