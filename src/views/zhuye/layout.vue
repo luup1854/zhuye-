@@ -51,3 +51,9 @@ const showNavbar = computed(() => route.path !== "/Index");
     </van-tabbar>
   </div>
 </template>
+<style scoped>
+:deep(.van-nav-bar__title) {
+  color: white !important;
+}
+
+</style>

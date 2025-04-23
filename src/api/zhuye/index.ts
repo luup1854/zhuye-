@@ -3,7 +3,7 @@ import { http } from "@/utils/http";
 
 export const getCampusService = () => {
   return http.request({
-    url: "/zyb/student/campus",
+    url: "/zyb/student/campusIng",
     method: "get"
   });
 };
@@ -15,14 +15,5 @@ export const loginStu = (username: string) => {
     data: {
       username: username
     }
-  });
-};
-
-type campusStu = {};
-export const applicationService = (data: campusStu) => {
-  return http.request({
-    url: "/zyb/student/applicationStu",
-    method: "post",
-    data: data
   });
 };
