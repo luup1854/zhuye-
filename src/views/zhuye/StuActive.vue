@@ -47,13 +47,6 @@ onMounted(() => {
           :key="index"
           class="mb-4"
         >
-          <template #title>
-            <div class="flex justify-between items-center mb-[10px] mt-[10px]">
-              <div class="text-lg font-semibold text-gray-800">
-                {{ activity.name }}
-              </div>
-            </div>
-          </template>
           <template #desc>
             <div class="line-clamp-3 text-gray-700 text-sm">
               {{ activity.content }}

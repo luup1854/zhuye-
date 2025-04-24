@@ -47,3 +47,9 @@ export const deleteFeedback = (username, id) => {
     method: "put"
   });
 };
+export const getCampusByName = name => {
+  return http.request({
+    url: `/zyb/student/campusIngByName?name=${name}`,
+    method: "get"
+  });
+};

@@ -42,8 +42,10 @@ const onApply = async () => {
   <div class="bg-[#fff] min-h-screen pb-16">
     <sub-layout />
     <!-- 顶部图片展示 -->
-    <div class="w-full h-52 bg-gray-100 overflow-hidden">
-      <img alt="活动主图" class="w-full h-full object-cover" />
+    <div
+      class="w-full h-52 bg-gray-100 text-bold text-[#16a45e] text-2xl flex items-center justify-center overflow-hidden"
+    >
+      向上有职
     </div>
     <van-card class="rounded-2xl !bg-white">
       <template #title>

@@ -10,7 +10,7 @@ const memberStore = useMemberStore(); // 获取 store 实例
 
 // 弹出登录弹窗
 const show = () => {
-  if(memberStore.profile.major && memberStore.profile.name) return
+  if (memberStore.profile.major && memberStore.profile.name) return;
   showPopup.value = true;
 };
 
@@ -54,7 +54,7 @@ const submitLogin = async () => {
 };
 
 const userInfo = {
-  pleaseLogin: "请登录"
+  pleaseLogin: "点击登录"
 };
 </script>
 
