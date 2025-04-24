@@ -7,15 +7,8 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: Layout,
-    redirect: { name: "Index" },
+    redirect: { name: "Active" },
     children: [
-      {
-        path: "Index",
-        name: "Index",
-        component: () => import("@/views/zhuye/IndexView.vue"),
-        meta: { title: "首页" }
-      },
-
       {
         path: "Active",
         name: "Active",
