@@ -3,16 +3,18 @@ import { ref, onMounted } from "vue";
 import { getStuCampus } from "@/api/zhuye/index";
 import { useRouter } from "vue-router";
 import SubLayout from "@/views/zhuye/components/SubLayout.vue";
-
+import { useMemberStore } from "@/store/modules/member"; // 导入 store
+const memberStore = useMemberStore();
+const currentUser = memberStore.profile.username;
 const router = useRouter();
 const activities = ref([]);
 const loading = ref(true);
 
-// 获取校园活动数据
+// 获取学生校园活动数据
 const getCampus = async () => {
   loading.value = true;
   try {
-    const res: any = await getStuCampus("2136101046");
+    const res: any = await getStuCampus(currentUser);
     activities.value = res;
   } catch (error) {
     console.error("请求失败：", error);
@@ -58,10 +60,14 @@ onMounted(() => {
             </div>
           </template>
           <template #bottom>
-            <div class="text-xs text-gray-500 mt-2 space-y-1">
-              <div>时间：{{ activity.time }}</div>
-              <div>地址：{{ activity.place }}</div>
-            </div>
+            <div class="text-sm text-[#888] mt-4 space-y-2">
+          <div>
+            <span class="text-[#444]">机构反馈：</span>{{ activity?.feedbackInstitution || "--" }}
+          </div>
+          <div>
+            <span class="text-[#444]">学生反馈：</span>{{ activity?.feedbackStu || "--" }}
+          </div>
+        </div>
           </template>
         </van-card>
       </van-cell-group>

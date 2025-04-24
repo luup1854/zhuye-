@@ -23,11 +23,8 @@ export const putFeedbackService = (id, username, feedback) => {
 };
 export const loginStu = (username: string) => {
   return http.request({
-    url: "/zyb/student/login",
-    method: "post",
-    data: {
-      username: username
-    }
+    url: `/zyb/student/login?username=${username}`,
+    method: "post"
   });
 };
 export const getStuFeedback = id => {

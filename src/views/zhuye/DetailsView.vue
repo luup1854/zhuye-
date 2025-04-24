@@ -4,7 +4,9 @@ import { showToast } from "vant";
 import SubLayout from "@/views/zhuye/components/SubLayout.vue";
 import { applicationService } from "@/api/zhuye/index";
 import { useRouter } from "vue-router";
-
+import { useMemberStore } from "@/store/modules/member"; // 导入 store
+const memberStore = useMemberStore();
+const currentUser = memberStore.profile.username;
 const router = useRouter();
 const detail = ref(null);
 const showPopup = ref(false);
@@ -18,14 +20,11 @@ onMounted(() => {
 const onShare = () => showToast("点击了分享");
 const onCollect = () => showToast("已收藏");
 const onEvaluate = () => {
-  router.push("/Comment/" + detail.value.id); 
-};
-const show = () => {
-  showPopup.value = true;
+  router.push("/Comment/" + detail.value.id);
 };
 const onApply = async () => {
   const params = {
-    username: input.value,
+    username: currentUser,
     institutionId: detail.value.institutionId,
     campusId: detail.value.id
   };
@@ -92,26 +91,12 @@ const onApply = async () => {
       <van-action-bar-button
         :disabled="btnDisabled"
         color="#16a45e"
-        @click="show"
         style="border-radius: 999px"
+        @click="onApply"
       >
         {{ btnDisabled ? "已报名" : "我要报名" }}
       </van-action-bar-button>
     </van-action-bar>
-
-    <van-popup
-      v-model:show="showPopup"
-      class="flex justify-center items-center flex-col p-[16px]"
-    >
-      <van-field v-model="input" label="账号" placeholder="请输入账号" />
-      <van-button
-        block
-        class="mt-16 bg-[#16a45e] !w-1/2 !h-[32px]"
-        @click="onApply"
-      >
-        报名
-      </van-button>
-    </van-popup>
   </div>
 </template>
 

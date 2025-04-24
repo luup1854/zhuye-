@@ -15,6 +15,7 @@ const userInfo = {
 // 获取 store 实例
 const memberStore = useMemberStore();
 const show = () => {
+  if(memberStore.profile.major && memberStore.profile.name) return
   showPopup.value = true;
 };
 
