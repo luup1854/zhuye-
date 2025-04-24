@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { putFeedbackService } from "@/api/zhuye";
 import SubLayout from "@/views/zhuye/components/SubLayout.vue";
+
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
@@ -12,6 +14,14 @@ const goToPublish = () => {
 
 const onApply = () => {
   console.log("发表", input.value);
+  const params = {
+    id: 1,
+    feedback: input.value,
+    username: "2136101109"
+  };
+  try {
+    const res = putFeedbackService(params);
+  } catch (error) {}
 };
 const comments = ref([
   {

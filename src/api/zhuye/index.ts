@@ -22,3 +22,12 @@ export const putFeedbackService = (data: any) => {
     data: data
   });
 };
+export const loginStu = (username: string) => {
+  return http.request({
+    url: "/zyb/student/login",
+    method: "post",
+    data: {
+      username: username
+    }
+  });
+};

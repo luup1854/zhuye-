@@ -5,8 +5,7 @@ import SubLayout from "@/views/zhuye/components/SubLayout.vue";
 import { applicationService } from "@/api/zhuye/index";
 import { useRouter } from "vue-router";
 
-
-const router = useRouter(); 
+const router = useRouter();
 const detail = ref(null);
 const showPopup = ref(false);
 const btnDisabled = ref(false);
@@ -19,8 +18,7 @@ onMounted(() => {
 const onShare = () => showToast("点击了分享");
 const onCollect = () => showToast("已收藏");
 const onEvaluate = () => {
-    router.push("/Comment");
-
+  router.push("/Comment");
 };
 const show = () => {
   showPopup.value = true;
