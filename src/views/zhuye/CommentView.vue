@@ -1,72 +1,47 @@
 <script setup lang="ts">
-import { putFeedbackService } from "@/api/zhuye";
+import { getStuFeedback, putFeedbackService } from "@/api/zhuye";
 import SubLayout from "@/views/zhuye/components/SubLayout.vue";
-
-import { ref } from "vue";
+import { showToast } from "vant";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-
+import { useMemberStore } from "@/store/modules/member"; // 导入 store
+const memberStore = useMemberStore();
+const currentUser = memberStore.profile.username;
 const showPopup = ref(false);
 const router = useRouter();
+const campusId = ref(router.currentRoute.value.params.id);
 const input = ref("");
 const goToPublish = () => {
   showPopup.value = true;
 };
 
-const onApply = () => {
-  console.log("发表", input.value);
-  const params = {
-    id: 1,
-    feedback: input.value,
-    username: "2136101109"
-  };
+const onApply = async () => {
   try {
-    const res = putFeedbackService(params);
-  } catch (error) {}
-};
-const comments = ref([
-  {
-    user: "用户A",
-    avatar: "https://via.placeholder.com/40",
-    time: "2025-04-21",
-    rate: 5,
-    content: "非常满意，服务很好，活动也很有趣！"
-  },
-  {
-    user: "用户B",
-    avatar: "https://via.placeholder.com/40",
-    time: "2025-04-20",
-    rate: 4,
-    content: "整体不错，组织得还可以，就是人有点多。"
-  },
-  {
-    user: "用户B",
-    avatar: "https://via.placeholder.com/40",
-    time: "2025-04-20",
-    rate: 4,
-    content: "整体不错，组织得还可以，就是人有点多。"
-  },
-  {
-    user: "用户B",
-    avatar: "https://via.placeholder.com/40",
-    time: "2025-04-20",
-    rate: 4,
-    content: "整体不错，组织得还可以，就是人有点多。"
-  },
-  {
-    user: "用户B",
-    avatar: "https://via.placeholder.com/40",
-    time: "2025-04-20",
-    rate: 4,
-    content: "整体不错，组织得还可以，就是人有点多。"
-  },
-  {
-    user: "用户B",
-    avatar: "https://via.placeholder.com/40",
-    time: "2025-04-20",
-    rate: 4,
-    content: "整体不错，组织得还可以，就是人有点多。"
+    await putFeedbackService(campusId.value, "2136101046", input.value);
+    showPopup.value = false;
+    input.value = "";
+    showToast("发表成功");
+    getFeedback();
+  } catch (error) {
+    console.log(error);
   }
-]);
+};
+const comments = ref([]);
+//获取评论信息
+
+const getFeedback = async () => {
+  try {
+    const res: any = await getStuFeedback(campusId.value);
+    comments.value = res;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const onDelete = id => {};
+onMounted(() => {
+  getFeedback();
+});
 </script>
 
 <template>
@@ -97,10 +72,19 @@ const comments = ref([
         class="bg-white rounded-xl p-4 shadow mb-3"
       >
         <div class="flex items-center mb-2">
-          <img :src="item.avatar" class="w-10 h-10 rounded-full mr-3" />
+          <van-button
+            v-if="item.username === currentUser"
+            size="mini"
+            type="danger"
+            @click="onDelete(item.id)"
+          >
+            删除
+          </van-button>
           <div>
-            <div class="text-sm text-[#333] font-medium">{{ item.user }}</div>
-            <div class="text-xs text-[#999]">{{ item.time }}</div>
+            <div class="text-sm text-[#333] font-medium">
+              {{ item.username }}
+            </div>
+            <div class="text-xs text-[#999]">{{ item.major }}</div>
           </div>
         </div>
         <van-rate :model-value="item.rate" readonly color="#16a45e" size="16" />

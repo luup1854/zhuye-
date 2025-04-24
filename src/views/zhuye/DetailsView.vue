@@ -18,7 +18,7 @@ onMounted(() => {
 const onShare = () => showToast("点击了分享");
 const onCollect = () => showToast("已收藏");
 const onEvaluate = () => {
-  router.push("/Comment");
+  router.push("/Comment/" + detail.value.id); 
 };
 const show = () => {
   showPopup.value = true;

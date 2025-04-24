@@ -15,11 +15,10 @@ export const applicationService = (data: any) => {
     data: data
   });
 };
-export const putFeedbackService = (data: any) => {
+export const putFeedbackService = (id, username, feedback) => {
   return http.request({
-    url: "/zyb/student/stuFeedback",
-    method: "put",
-    data: data
+    url: `/zyb/student/stuFeedback?id=${id}&username=${username}&feedback=${feedback}`,
+    method: "put"
   });
 };
 export const loginStu = (username: string) => {
@@ -29,5 +28,11 @@ export const loginStu = (username: string) => {
     data: {
       username: username
     }
+  });
+};
+export const getStuFeedback = id => {
+  return http.request({
+    url: `/zyb/student/Feedback?id=${id}`,
+    method: "get"
   });
 };

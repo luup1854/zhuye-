@@ -41,7 +41,6 @@ const showNavbar = computed(() => route.path !== "/Index");
       active-color="#4CAF50"
       class="sticky bottom-0 z-10 bg-white border-t"
     >
-      <van-tabbar-item replace to="/Index" icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item replace to="/Active" icon="volume-o"
         >报名</van-tabbar-item
       >

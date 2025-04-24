@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { getCampusService } from "@/api/zhuye/index.ts";
 
 const tab = ref(0);
 const icons = [
