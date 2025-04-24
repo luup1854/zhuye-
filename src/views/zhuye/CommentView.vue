@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { getStuFeedback, putFeedbackService } from "@/api/zhuye";
+import {
+  deleteFeedback,
+  getStuFeedback,
+  putFeedbackService
+} from "@/api/zhuye";
 import SubLayout from "@/views/zhuye/components/SubLayout.vue";
 import { showToast } from "vant";
 import { onMounted, ref } from "vue";
@@ -17,7 +21,7 @@ const goToPublish = () => {
 
 const onApply = async () => {
   try {
-    await putFeedbackService(campusId.value, "2136101046", input.value);
+    await putFeedbackService(campusId.value, currentUser, input.value);
     showPopup.value = false;
     input.value = "";
     showToast("发表成功");
@@ -38,7 +42,15 @@ const getFeedback = async () => {
   }
 };
 
-const onDelete = id => {};
+const onDelete = async item => {
+  try {
+    await deleteFeedback(item.username, campusId.value);
+    showToast("删除成功");
+    getFeedback();
+  } catch (error) {
+    console.log(error);
+  }
+};
 onMounted(() => {
   getFeedback();
 });
@@ -71,25 +83,25 @@ onMounted(() => {
         :key="index"
         class="bg-white rounded-xl p-4 shadow mb-3"
       >
-        <div class="flex items-center mb-2">
+        <div class="flex items-center justify-between mb-2">
+          <div>
+            <div class="text-sm text-[#333] font-medium">
+              {{ item.name }}
+            </div>
+            <div class="text-xs text-[#999]">{{ item.major }}</div>
+          </div>
           <van-button
             v-if="item.username === currentUser"
             size="mini"
             type="danger"
-            @click="onDelete(item.id)"
+            @click="onDelete(item)"
           >
             删除
           </van-button>
-          <div>
-            <div class="text-sm text-[#333] font-medium">
-              {{ item.username }}
-            </div>
-            <div class="text-xs text-[#999]">{{ item.major }}</div>
-          </div>
         </div>
-        <van-rate :model-value="item.rate" readonly color="#16a45e" size="16" />
+
         <div class="text-sm text-[#555] mt-2 leading-relaxed">
-          {{ item.content }}
+          {{ item.feedback }}
         </div>
       </div>
     </div>

@@ -89,7 +89,12 @@ const userInfo = {
     <!-- 功能区域 -->
     <div class="mt-[35px]">
       <van-cell-group inset>
-        <van-cell title="我的活动报名" is-link icon="edit" />
+        <van-cell
+          title="我的活动报名"
+          is-link
+          icon="edit"
+          @click="$router.push('/User/Active')"
+        />
         <van-cell title="关于我们" is-link icon="info-o" />
         <van-cell title="设置" is-link icon="setting-o" />
       </van-cell-group>

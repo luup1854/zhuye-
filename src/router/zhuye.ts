@@ -41,6 +41,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "Comment",
     component: () => import("@/views/zhuye/CommentView.vue"),
     meta: { title: "评论" }
+  },
+  {
+    path: "/User/Active",
+    name: "UserActive",
+    component: () => import("@/views/zhuye/StuActive.vue"),
+    meta: { title: "参加的活动" }
   }
 ];
 
