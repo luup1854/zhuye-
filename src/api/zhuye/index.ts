@@ -9,9 +9,16 @@ export const getCampusService = () => {
 };
 
 export const applicationService = (data: any) => {
-    return http.request({
-   url: "/zyb/student/applicationStu",
+  return http.request({
+    url: "/zyb/student/applicationStu",
     method: "post",
-   data: data
+    data: data
   });
-    };
+};
+export const putFeedbackService = (data: any) => {
+  return http.request({
+    url: "/zyb/student/stuFeedback",
+    method: "put",
+    data: data
+  });
+};

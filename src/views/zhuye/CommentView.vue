@@ -3,11 +3,16 @@ import SubLayout from "@/views/zhuye/components/SubLayout.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
+const showPopup = ref(false);
 const router = useRouter();
+const input = ref("");
 const goToPublish = () => {
-  router.push("/publish"); // 根据你的路由调整
+  showPopup.value = true;
 };
 
+const onApply = () => {
+  console.log("发表", input.value);
+};
 const comments = ref([
   {
     user: "用户A",
@@ -94,7 +99,25 @@ const comments = ref([
         </div>
       </div>
     </div>
-
+    <van-popup
+      v-model:show="showPopup"
+      class="flex justify-center items-center flex-col p-[16px]"
+    >
+      <van-field
+        v-model="input"
+        rows="1"
+        autosize
+        type="textarea"
+        placeholder="请输入反馈内容"
+      />
+      <van-button
+        block
+        class="mt-16 !bg-[#16a45e] !w-1/2 !h-[32px] !text-white"
+        @click="onApply"
+      >
+        发表
+      </van-button>
+    </van-popup>
     <!-- 悬浮按钮 -->
     <van-button
       icon="edit"
@@ -107,6 +130,4 @@ const comments = ref([
   </div>
 </template>
 
-<style scoped>
-/* 根据 sub-layout 的实际高度来调整 pt-[60px] */
-</style>
+<style scoped></style>

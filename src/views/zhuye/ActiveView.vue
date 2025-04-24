@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { getCampusService } from "@/api/zhuye/index.ts";
+import { getCampusService } from "@/api/zhuye/index";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -11,7 +11,7 @@ const loading = ref(true);
 const getCampus = async () => {
   loading.value = true;
   try {
-    const res = await getCampusService();
+    const res:any = await getCampusService();
     activities.value = res;
   } catch (error) {
     console.error("请求失败：", error);

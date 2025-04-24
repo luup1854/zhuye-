@@ -13,7 +13,7 @@ const onClickLeft = () => {
 <template>
   <div>
     <van-nav-bar
-      :title="route.meta.title"
+      :title="route.meta.title as string"
       left-text="返回"
       class="sticky top-0 z-10 !text-white !bg-[#16a45e]"
       left-arrow
