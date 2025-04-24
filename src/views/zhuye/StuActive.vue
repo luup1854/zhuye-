@@ -1,0 +1,82 @@
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import { getStuCampus } from "@/api/zhuye/index";
+import { useRouter } from "vue-router";
+import SubLayout from "@/views/zhuye/components/SubLayout.vue";
+
+const router = useRouter();
+const activities = ref([]);
+const loading = ref(true);
+
+// 获取校园活动数据
+const getCampus = async () => {
+  loading.value = true;
+  try {
+    const res: any = await getStuCampus("2136101046");
+    activities.value = res;
+  } catch (error) {
+    console.error("请求失败：", error);
+  } finally {
+    loading.value = false;
+  }
+};
+onMounted(() => {
+  getCampus();
+});
+</script>
+
+<template>
+  <div class="h-full bg-white flex flex-col overflow-auto">
+    <sub-layout />
+    <!-- 活动列表或加载/空状态 -->
+    <div class="flex-1 overflow-auto p-4">
+      <!-- 加载中 -->
+      <van-loading
+        v-if="loading"
+        type="spinner"
+        size="24px"
+        class="mx-auto mt-10"
+      />
+
+      <!-- 活动列表 -->
+      <van-cell-group v-else-if="activities.length > 0">
+        <van-card
+          v-for="(activity, index) in activities"
+          :key="index"
+          class="mb-4"
+        >
+          <template #title>
+            <div class="flex justify-between items-center mb-[10px] mt-[10px]">
+              <div class="text-lg font-semibold text-gray-800">
+                {{ activity.name }}
+              </div>
+            </div>
+          </template>
+          <template #desc>
+            <div class="line-clamp-3 text-gray-700 text-sm">
+              {{ activity.content }}
+            </div>
+          </template>
+          <template #bottom>
+            <div class="text-xs text-gray-500 mt-2 space-y-1">
+              <div>时间：{{ activity.time }}</div>
+              <div>地址：{{ activity.place }}</div>
+            </div>
+          </template>
+        </van-card>
+      </van-cell-group>
+
+      <!-- 空状态 -->
+      <div
+        v-else
+        class="flex flex-col items-center justify-center text-gray-400 text-sm mt-10"
+      >
+        <img
+          src="https://img.yzcdn.cn/vant/empty-image-default.png"
+          class="w-24 h-24 mb-2"
+        />
+        暂无活动记录~
+      </div>
+    </div>
+  </div>
+</template>

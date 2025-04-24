@@ -51,7 +51,10 @@ const submitLogin = () => {
 
 <template>
   <div class="h-full pb-[10px]">
-    <div class="flex justify-around items-center p-4 h-[180px] bg-[#16a45e]" @click="show">
+    <div
+      class="flex justify-around items-center p-4 h-[180px] bg-[#16a45e]"
+      @click="show"
+    >
       <div>
         <div class="text-lg font-semibold text-white">
           <!-- 如果 Pinia 中有学生信息，显示 major 和 name，否则显示 请登录 -->
@@ -69,7 +72,12 @@ const submitLogin = () => {
 
     <div class="mt-[35px]">
       <van-cell-group inset>
-        <van-cell title="我的活动报名" is-link icon="edit" />
+        <van-cell
+          title="我的活动报名"
+          is-link
+          icon="edit"
+          @click="$router.push('/User/Active')"
+        />
         <van-cell title="关于我们" is-link icon="info-o" />
         <van-cell title="设置" is-link icon="setting-o" />
       </van-cell-group>

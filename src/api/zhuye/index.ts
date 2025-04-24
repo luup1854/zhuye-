@@ -36,3 +36,17 @@ export const getStuFeedback = id => {
     method: "get"
   });
 };
+
+export const getStuCampus = username => {
+  return http.request({
+    url: `/zyb/student/campus_stu?username=${username}`,
+    method: "get"
+  });
+};
+
+export const deleteFeedback = (username, id) => {
+  return http.request({
+    url: `/zyb/student/stu_feedback?id=${id}&username=${username}`,
+    method: "put"
+  });
+};
