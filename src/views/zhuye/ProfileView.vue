@@ -1,65 +1,84 @@
 <script setup lang="ts">
 import { loginStu } from "@/api/zhuye";
-import { ref } from "vue";
-import { useMemberStore } from "@/store/modules/member"; // 导入 store
+import { computed, ref } from "vue";
+import { useMemberStore } from "@/store/modules/member";
 
 const showPopup = ref<boolean>(false);
 const username = ref(""); // 用户名输入值
 
-const userInfo = {
-  nickname: "欢迎回来~~~",
-  tips: "使用更多功能",
-  pleaseLogin: "请登录"
-};
+const memberStore = useMemberStore(); // 获取 store 实例
 
-// 获取 store 实例
-const memberStore = useMemberStore();
+// 弹出登录弹窗
 const show = () => {
   showPopup.value = true;
 };
 
-const submitLogin = () => {
-  loginStu(username.value)
-    .then((res: any) => {
-      console.log("用户登录账号：", res);
-      if (res) {
-        // 将获取到的学生信息存储到 Pinia store 中
-        memberStore.setProfile({
-          username: res.username,
-          name: res.name,
-          university: res.university,
-          college: res.college,
-          major: res.major,
-          phone: res.phone,
-          idCard: res.idCard
-        });
+// 退出登录
+const logout = () => {
+  memberStore.clearProfile();
+};
 
-        showPopup.value = false;
-      } else {
-        // 登录失败，提示错误信息
-        console.error("登录失败", res);
-        // 可以在这里添加一个提示框或者弹窗，告知用户登录失败
-      }
-    })
-    .catch(error => {
-      console.error("登录请求出错", error);
-      // 登录失败时的错误提示
-      // 可以在这里显示错误提示给用户
+// 判断是否登录
+const isLoggedIn = computed(() => {
+  return !!(memberStore.profile.name && memberStore.profile.major);
+});
+
+// 点击头部区域
+const handleClick = () => {
+  if (!isLoggedIn.value) {
+    show();
+  }
+};
+
+// 登录提交
+const submitLogin = async () => {
+  console.log("用户登录账号：", username.value);
+  const res: any = await loginStu(username.value);
+  if (res) {
+    console.log("用户登录账号：", res);
+    memberStore.setProfile({
+      username: res.username,
+      name: res.name,
+      university: res.university,
+      college: res.college,
+      major: res.major,
+      phone: res.phone,
+      idCard: res.idCard
     });
+    showPopup.value = false;
+  } else {
+    console.error("登录失败或请求异常");
+    // 你也可以加个 Toast 提示
+  }
+};
+
+const userInfo = {
+  pleaseLogin: "请登录"
 };
 </script>
 
 <template>
   <div class="h-full pb-[10px]">
-    <div class="flex justify-around items-center p-4 h-[180px] bg-[#16a45e]" @click="show">
+    <!-- 头部区域 -->
+    <div
+      class="flex justify-around items-center p-4 h-[180px] bg-[#16a45e]"
+      :class="{ 'cursor-pointer': !isLoggedIn }"
+      @click="handleClick"
+    >
       <div>
         <div class="text-lg font-semibold text-white">
-          <!-- 如果 Pinia 中有学生信息，显示 major 和 name，否则显示 请登录 -->
           {{
-            memberStore.profile.major && memberStore.profile.name
+            isLoggedIn
               ? `${memberStore.profile.major} - ${memberStore.profile.name}`
               : userInfo.pleaseLogin
           }}
+        </div>
+        <div
+          v-if="isLoggedIn"
+          class="mt-2 text-sm text-white underline cursor-pointer"
+          @click.stop="logout"
+        >
+          退出登录
         </div>
       </div>
       <div>
@@ -67,6 +86,7 @@ const submitLogin = () => {
       </div>
     </div>
 
+    <!-- 功能区域 -->
     <div class="mt-[35px]">
       <van-cell-group inset>
         <van-cell title="我的活动报名" is-link icon="edit" />
