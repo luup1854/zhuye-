@@ -1,5 +1,4 @@
 import Layout from "@/views/zhuye/layout.vue";
-import path from "path";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: Layout,
-    redirect: { name: "Active" },
+    redirect: { name: "Profile" },
     children: [
       {
         path: "Active",
